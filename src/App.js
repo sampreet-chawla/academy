@@ -42,6 +42,7 @@ function App() {
 
 	// Handle function to select cohorts
 	const selectCohort = (cohort) => {
+		console.log('App selectCohort ', cohort);
 		setSelectedCohort(cohort);
 	};
 
@@ -88,6 +89,22 @@ function App() {
 		});
 	};
 
+	//Handle Delete Student
+	const deleteStudent = (student) => {
+		axios({
+			url:
+				url +
+				'/cohorts/id/' +
+				selectedCohort._id +
+				'/removeStudent/' +
+				student._id,
+			method: 'put',
+		}).then((data) => {
+			setCohortList(data.data ? data.data.data : []);
+			setSelectedCohort(emptyCohort);
+		});
+	};
+
 	return (
 		<Router>
 			<h2>Welcome to Wow Academy!</h2>
@@ -131,8 +148,40 @@ function App() {
 				<Route
 					exact
 					path='/students'
-					render={(rp) => <ShowStudents {...rp} cohort={selectedCohort} />}
+					render={(rp) => (
+						<ShowStudents
+							{...rp}
+							selectedCohort={selectedCohort}
+							selectedStudent={selectedStudent}
+							selectStudent={selectStudent}
+							deleteStudent={deleteStudent}
+						/>
+					)}
 				/>
+				{/* <Route
+					exact
+					path='/add-student'
+					render={(rp) => (
+						<StudentForm
+							{...rp}
+							label='Add Student'
+							student={emptyStudent}
+							handleSubmit={createStudent}
+						/>
+					)}
+				/>
+				<Route
+					exact
+					path='/edit-student'
+					render={(rp) => (
+						<StudentForm
+							{...rp}
+							label='Edit Student'
+							student={selectedStudent}
+							handleSubmit={updateStudent}
+						/>
+					)}
+				/> */}
 				<Redirect to='/' />
 			</Switch>
 		</Router>
