@@ -4,14 +4,11 @@ import axios from 'axios';
 
 const ShowStudents = (props) => {
 	const selectedCohort = props.selectedCohort;
-	console.log('ShowStudents cohort:', selectedCohort);
 	const cohortId = selectedCohort._id;
 	const cohortName = selectedCohort.cohortName;
 
 	const loadStudents = () => {
-		console.log('In loadStudents');
 		const studentsJSX = selectedCohort.students.map((student, index) => {
-			console.log('In loadStudents, inside map ', student);
 			const backgroundColor = index % 2 !== 0 ? 'lightgrey' : 'white';
 			return (
 				<article

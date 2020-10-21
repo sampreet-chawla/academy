@@ -11,6 +11,7 @@ import './App.css';
 import ShowCohorts from './components/ShowCohorts';
 import CohortForm from './components/CohortForm';
 import ShowStudents from './components/ShowStudents';
+import StudentForm from './components/StudentForm';
 
 function App() {
 	const url = 'https://academy-backend-skc.herokuapp.com/api';
@@ -90,6 +91,33 @@ function App() {
 	};
 
 	//Handle Delete Student
+	const addStudent = (student) => {
+		console.log('Add student: ', student);
+		axios({
+			url: url + '/cohorts/id/' + selectedCohort._id + '/addStudent/',
+			method: 'put',
+			headers: { 'Content-Type': 'application/json' },
+			data: JSON.stringify(student),
+		}).then((data) => {
+			setCohortList(data.data ? data.data.data : []);
+			setSelectedCohort(emptyCohort);
+		});
+	};
+
+	//Handle Edit Student
+	const editStudent = (student) => {
+		axios({
+			url: url + '/students/id/' + student._id,
+			method: 'put',
+			headers: { 'Content-Type': 'application/json' },
+			data: JSON.stringify(student),
+		}).then((data) => {
+			getCohorts();
+			setSelectedCohort(emptyCohort);
+		});
+	};
+
+	//Handle Delete Student
 	const deleteStudent = (student) => {
 		axios({
 			url:
@@ -158,7 +186,7 @@ function App() {
 						/>
 					)}
 				/>
-				{/* <Route
+				<Route
 					exact
 					path='/add-student'
 					render={(rp) => (
@@ -166,7 +194,7 @@ function App() {
 							{...rp}
 							label='Add Student'
 							student={emptyStudent}
-							handleSubmit={createStudent}
+							handleSubmit={addStudent}
 						/>
 					)}
 				/>
@@ -178,10 +206,10 @@ function App() {
 							{...rp}
 							label='Edit Student'
 							student={selectedStudent}
-							handleSubmit={updateStudent}
+							handleSubmit={editStudent}
 						/>
 					)}
-				/> */}
+				/>
 				<Redirect to='/' />
 			</Switch>
 		</Router>

@@ -2,13 +2,14 @@ import React, { useState } from 'react';
 
 const StudentForm = (props) => {
 	//STATE FOR THE FORM
-	const [formData, setFormData] = useState(props.cohort);
+	const [formData, setFormData] = useState(props.student);
 
 	//FUNCTIONS
 	const handleSubmit = (event) => {
 		event.preventDefault();
 		props.handleSubmit(formData);
-		props.history.push('/student');
+		console.log('In StudentForm : ', formData);
+		props.history.push('/');
 	};
 
 	const handleChange = (event) => {
@@ -16,7 +17,12 @@ const StudentForm = (props) => {
 	};
 
 	return (
-		<form onSubmit={handleSubmit}>
+		<form
+			onSubmit={handleSubmit}
+			style={{
+				margin: '0px 50px',
+				contentAlign: 'center',
+			}}>
 			<input
 				type='text'
 				name='studentName'
