@@ -13,8 +13,8 @@ import CohortForm from './components/CohortForm';
 import ShowStudents from './components/ShowStudents';
 
 function App() {
-	//const url = 'https://cookbook-api-skc.herokuapp.com/api';
-	const url = 'http://localhost:4500/api';
+	const url = 'https://academy-backend-skc.herokuapp.com/api';
+	//const url = 'http://localhost:4500/api';
 
 	const emptyCohort = {
 		cohortName: '',
